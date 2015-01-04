@@ -24,7 +24,7 @@ public class EventDateRecorder {
         return new EventDateRecorder(context, key);
     }
 
-    EventDateRecorder(Context context, String key) {
+    public EventDateRecorder(Context context, String key) {
         mContext = context;
         mPreferences = mContext.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
         mKey = key;
@@ -37,6 +37,11 @@ public class EventDateRecorder {
                            .putLong(mKey + KEY_PREVIOUS_TIME_SUFFIX, newData.mPreviousTime)
                            .putInt(mKey + KEY_COUNT_SUFFIX, newData.mCount)
                            .apply();
+    }
+
+    public void clear() {
+        mPreferences.edit().clear().apply();
+        mData = null;
     }
 
     EventDateRecorderData getData() {
