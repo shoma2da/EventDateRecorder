@@ -9,7 +9,16 @@ iOS project is [here](https://github.com/soragoto/SRGEventDateRecorder).
 
 ## Installation
 
-under construction...
+Add below lines to your `build.gradle`.
+
+```java
+repositories {
+    maven { url 'https://raw.githubusercontent.com/shoma2da/EventDateRecorder/master/lib/repository/' }
+}
+dependencies {
+    compile 'com.hatenablog.shoma2da:eventdaterecorderlib:0.1.0'
+}
+```
 
 ## Usage
 
