@@ -9,7 +9,16 @@ iOS project is [here](https://github.com/soragoto/SRGEventDateRecorder).
 
 ## Installation
 
-under construction...
+Add below lines to your `build.gradle`.
+
+```java
+repositories {
+    maven { url 'https://raw.githubusercontent.com/shoma2da/EventDateRecorder/master/lib/repository/' }
+}
+dependencies {
+    compile 'com.hatenablog.shoma2da:eventdaterecorderlib:0.1.0'
+}
+```
 
 ## Usage
 
@@ -20,13 +29,13 @@ import com.hatenablog.shoma2da.eventdaterecorderlib.EventDateRecorder;
 
 You can record event.
 ```java
-EventDateRecorder recorder = new EventDateRecorder(context, "my_event");
+EventDateRecorder recorder = EventDateRecorder.load(context, "my_event");
 recorder.record();
 ```
 
 You can access to recorded data.
 ```java
-EventDateRecorder recorder = new EventDateRecorder(context, "my_event");
+EventDateRecorder recorder = EventDateRecorder.load(context, "my_event");
 
 // return: boolean
 recorder.didRecorded();
@@ -49,6 +58,6 @@ recorder.didElapsedSincePreviousRecordedDate(60 * 60);
 
 You can clear data.
 ```objc
-EventDateRecorder recorder = new EventDateRecorder(context, "my_event");
+EventDateRecorder recorder = EventDateRecorder.load(context, "my_event");
 recorder.clear();
 ```

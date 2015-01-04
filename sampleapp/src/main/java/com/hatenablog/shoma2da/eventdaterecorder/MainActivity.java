@@ -22,7 +22,7 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         //初期値
-        mRecorder = new EventDateRecorder(this, "sample");
+        mRecorder = EventDateRecorder.load(this, "sample");
 
         //表示テキストを取得
         mCountTextView = (TextView)findViewById(R.id.countTextView);
