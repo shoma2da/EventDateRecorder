@@ -18,6 +18,7 @@ public class EventDateRecorder {
     private Context mContext;
     private SharedPreferences mPreferences;
     private String mKey;
+    private EventDateRecorderData mData;
 
     public static EventDateRecorder load(Context context, String key) {
         return new EventDateRecorder(context, key);
@@ -31,6 +32,7 @@ public class EventDateRecorder {
 
     public void record() {
         EventDateRecorderData newData = getData().update();
+        mData = newData;
         mPreferences.edit().putLong(mKey + KEY_INITIAL_TIME_SUFFIX, newData.mInitialTime)
                            .putLong(mKey + KEY_PREVIOUS_TIME_SUFFIX, newData.mPreviousTime)
                            .putInt(mKey + KEY_COUNT_SUFFIX, newData.mCount)
@@ -38,10 +40,14 @@ public class EventDateRecorder {
     }
 
     EventDateRecorderData getData() {
-        long initialTime = mPreferences.getLong(mKey + KEY_INITIAL_TIME_SUFFIX, EventDateRecorderData.EMPTY_INITIAL_TIME);
-        long previousTime = mPreferences.getLong(mKey + KEY_PREVIOUS_TIME_SUFFIX, 0);
-        int count = mPreferences.getInt(mKey + KEY_COUNT_SUFFIX, 0);
-        return new EventDateRecorderData(initialTime, previousTime, count);
+        if (mData == null) {
+            long initialTime = mPreferences.getLong(mKey + KEY_INITIAL_TIME_SUFFIX, EventDateRecorderData.EMPTY_INITIAL_TIME);
+            long previousTime = mPreferences.getLong(mKey + KEY_PREVIOUS_TIME_SUFFIX, 0);
+            int count = mPreferences.getInt(mKey + KEY_COUNT_SUFFIX, 0);
+            mData = new EventDateRecorderData(initialTime, previousTime, count);
+            return mData;
+        }
+        return mData;
     }
 
     public boolean didRecorded() {
