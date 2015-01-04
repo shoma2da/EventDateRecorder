@@ -42,12 +42,18 @@ public class EventDateRecorderData {
     }
 
     Date previousDate() {
+        if (mPreviousTime  == 0) {
+            return null;
+        }
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(mPreviousTime);
         return calendar.getTime();
     }
 
     Date initialDate() {
+        if (mInitialTime == 0) {
+            return null;
+        }
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(mInitialTime);
         return calendar.getTime();
