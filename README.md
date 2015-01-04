@@ -5,6 +5,8 @@ EventDateRecorder record event date and count persistently.
 
 If you want to get a sample app, please clone this repo : 'sampleapp' is a sample application.
 
+iOS project is [here](https://github.com/soragoto/SRGEventDateRecorder).
+
 ## Installation
 
 under construction...
