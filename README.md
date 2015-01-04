@@ -20,13 +20,13 @@ import com.hatenablog.shoma2da.eventdaterecorderlib.EventDateRecorder;
 
 You can record event.
 ```java
-EventDateRecorder recorder = new EventDateRecorder(context, "my_event");
+EventDateRecorder recorder = EventDateRecorder.load(context, "my_event");
 recorder.record();
 ```
 
 You can access to recorded data.
 ```java
-EventDateRecorder recorder = new EventDateRecorder(context, "my_event");
+EventDateRecorder recorder = EventDateRecorder.load(context, "my_event");
 
 // return: boolean
 recorder.didRecorded();
@@ -49,6 +49,6 @@ recorder.didElapsedSincePreviousRecordedDate(60 * 60);
 
 You can clear data.
 ```objc
-EventDateRecorder recorder = new EventDateRecorder(context, "my_event");
+EventDateRecorder recorder = EventDateRecorder.load(context, "my_event");
 recorder.clear();
 ```

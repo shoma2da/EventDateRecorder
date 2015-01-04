@@ -24,7 +24,7 @@ public class EventDateRecorder {
         return new EventDateRecorder(context, key);
     }
 
-    public EventDateRecorder(Context context, String key) {
+    EventDateRecorder(Context context, String key) {
         mContext = context;
         mPreferences = mContext.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
         mKey = key;
