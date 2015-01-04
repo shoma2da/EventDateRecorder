@@ -1,0 +1,12 @@
+language: android
+
+# Emulator Management: Create, Start and Wait
+before_script:
+  - echo no | android create avd --force -n test -t android-19 --abi armeabi-v7a
+  - emulator -avd test -no-skin -no-audio -no-window &
+  - android-wait-for-emulator
+  - adb shell input keyevent 82 &
+
+notifications:
+  slack:
+    secure: PsMgAbEQg5Du0UCh5V70EldNSj5UXCY9694D2qGMxxU9gjXeWLeFD0sl1QGqIxJz3SurHdzQ84+3+FO6jwyb2f81IMFJn/xFuAMdeYNNBg54JsoYeisGC0/bPtb/o8mj3sjNmxXCDi2SK7QZbRSzuPRDvuGKsiiNwVeFUJAN7xg=

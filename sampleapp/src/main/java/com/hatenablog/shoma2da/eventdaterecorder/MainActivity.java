@@ -1,43 +1,62 @@
 package com.hatenablog.shoma2da.eventdaterecorder;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v7.app.ActionBarActivity;
+import android.view.View;
+import android.widget.TextView;
 
-import com.hatenablog.shoma2da.eventdaterecorderlib.Sample;
+import com.hatenablog.shoma2da.eventdaterecorderlib.EventDateRecorder;
 
 
 public class MainActivity extends ActionBarActivity {
+
+    private EventDateRecorder mRecorder;
+
+    private TextView mCountTextView;
+    private TextView mInitialDateTextView;
+    private TextView mPreviousDateTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Sample.hello();
+        //初期値
+        mRecorder = EventDateRecorder.load(this, "sample");
+
+        //表示テキストを取得
+        mCountTextView = (TextView)findViewById(R.id.countTextView);
+        mInitialDateTextView = (TextView)findViewById(R.id.initialDateTextView);
+        mPreviousDateTextView = (TextView)findViewById(R.id.previousDateTextView);
+
+        updateTexts();
+
+        //ボタンの動作を設定
+        findViewById(R.id.recordButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mRecorder.record();
+                updateTexts();
+            }
+        });
+        findViewById(R.id.clearButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mRecorder.clear();
+                updateTexts();
+            }
+        });
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+    void updateTexts() {
+        mCountTextView.setText("Count : " + mRecorder.recordedCount());
+        mInitialDateTextView.setText("Initial Date : " + mRecorder.initialRecordedDate());
+        mPreviousDateTextView.setText("Previous Date : " + mRecorder.previousRecordedDate());
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+    protected void onDestroy() {
+        super.onDestroy();
+        mRecorder.clear();
     }
 }
