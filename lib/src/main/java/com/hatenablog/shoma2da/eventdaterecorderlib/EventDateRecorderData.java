@@ -14,6 +14,10 @@ public class EventDateRecorderData {
     final long mPreviousTime;
     final int mCount;
 
+    EventDateRecorderData() {
+        this(EMPTY_INITIAL_TIME, 0, 0);
+    }
+
     EventDateRecorderData(long initialTime, long previousTime, int count) {
         mInitialTime = initialTime;
         mPreviousTime = previousTime;
@@ -21,14 +25,16 @@ public class EventDateRecorderData {
     }
 
     EventDateRecorderData update() {
-        Date now = new Date();
+        return update(new Date());
+    }
 
+    EventDateRecorderData update(Date date) {
         long newInitialTime = mInitialTime;
         if (newInitialTime == EMPTY_INITIAL_TIME) {
-            newInitialTime = now.getTime();
+            newInitialTime = date.getTime();
         }
 
-        return new EventDateRecorderData(newInitialTime, now.getTime(), mCount + 1);
+        return new EventDateRecorderData(newInitialTime, date.getTime(), mCount + 1);
     }
 
     boolean didRecorded() {
@@ -48,15 +54,21 @@ public class EventDateRecorderData {
     }
 
     boolean didElapsedSincePreviousRecordedDate(int seconds) {
-        Date now = new Date();
-        long diffTimeInMillis = Math.abs(mPreviousTime - now.getTime());
-        return seconds < (diffTimeInMillis / 1000);
+        return didElapsedSincePreviousRecordedDate(new Date(), seconds);
+    }
+
+    boolean didElapsedSincePreviousRecordedDate(Date date, int seconds) {
+        long diffTimeInMillis = Math.abs(mPreviousTime - date.getTime());
+        return seconds > (diffTimeInMillis / 1000);
     }
 
     boolean didElapsedSinceInitialRecordedDate(int seconds) {
-        Date now = new Date();
-        long diffTimeInMillis = Math.abs(mInitialTime - now.getTime());
-        return seconds < (diffTimeInMillis / 1000);
+        return didElapsedSinceInitialRecordedDate(new Date(), seconds);
+    }
+
+    boolean didElapsedSinceInitialRecordedDate(Date date, int seconds) {
+        long diffTimeInMillis = Math.abs(mInitialTime - date.getTime());
+        return seconds > (diffTimeInMillis / 1000);
     }
 
 }
